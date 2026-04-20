@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaurav Khanduri | Frontend Developer Resume</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    :root {
+      --ink: #171717;
+      --muted: #5f6368;
+      --line: #d8ded2;
+      --paper: #fbfcf7;
+      --white: #ffffff;
+      --teal: #008f8c;
+      --coral: #ff5c35;
+      --yellow: #ffd447;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    .resume {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 18px 45px rgba(23, 23, 23, 0.08);
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+      padding-bottom: 22px;
+      border-bottom: 4px solid var(--ink);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+    }
+
+    h2 {
+      margin: 28px 0 12px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+      color: var(--teal);
+      font-size: 1.25rem;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin-top: 16px;
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    a {
+      color: var(--teal);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .title {
+      display: inline-flex;
+      margin-top: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    .contact {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: right;
+    }
+
+    .summary {
+      margin-top: 22px;
+      font-size: 1.02rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .skill-box {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcf7;
+    }
+
+    .skill-box strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--coral);
+    }
+
+    .project,
+    .role {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project:last-child,
+    .role:last-child {
+      border-bottom: 0;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .print-note {
+      margin-top: 26px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff7c9;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    @media print {
+      body {
+        background: var(--white);
+      }
+
+      .resume {
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .print-note {
+        display: none;
+      }
+
+      a {
+        color: var(--ink);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .resume {
+        width: calc(100% - 24px);
+        margin: 12px auto;
+        padding: 22px;
+      }
+
+      header,
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact {
+        text-align: left;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="resume">
+    <header>
+      <div>
+        <h1>Gaurav Khanduri</h1>
+        <span class="title">Frontend Developer Fresher</span>
+      </div>
+      <div class="contact">
+        <span>Delhi, India</span>
+        <a href="mailto:khandurig84@gmail.com">khandurig84@gmail.com</a>
+        <a href="tel:+918506928735">+91 8506928735</a>
+        <a href="https://github.com/GauravKhanduri2002">github.com/GauravKhanduri2002</a>
+        <a href="https://www.linkedin.com/in/gaurav-khanduri-a20877207">linkedin.com/in/gaurav-khanduri-a20877207</a>
+      </div>
+    </header>
+
+    <p class="summary">
+      Aspiring Frontend Developer with a Bachelor of Computer Applications and 3.5+ years of experience in customer support, airline feedback analysis, e-commerce operations, and issue resolution. Skilled in HTML, CSS, JavaScript fundamentals, responsive design, and building browser-based mini apps. Strong ability to understand user problems, organize information clearly, and create practical interfaces for support, feedback, and service workflows.
+    </p>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-box"><strong>Frontend</strong>HTML5, CSS3, JavaScript, Responsive Web Design</div>
+        <div class="skill-box"><strong>Tools</strong>GitHub, VS Code, Chrome DevTools, Browser Testing</div>
+        <div class="skill-box"><strong>Web Concepts</strong>Forms, Filters, DOM Manipulation, localStorage, UI States, Dashboards</div>
+        <div class="skill-box"><strong>Professional Strengths</strong>Customer Handling, Communication, Issue Resolution, Escalation Handling</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <article class="project">
+        <h3>Customer Support Dashboard</h3>
+        <p class="meta">Tech: HTML, CSS, JavaScript, localStorage</p>
+        <ul>
+          <li>Built a browser-based dashboard for creating, resolving, escalating, deleting, and filtering support tickets.</li>
+          <li>Added live dashboard metrics and category charts for support operations.</li>
+          <li>Saved demo ticket data in the browser using localStorage.</li>
+        </ul>
+      </article>
+
+      <article class="project">
+        <h3>Travel Feedback Analyzer</h3>
+        <p class="meta">Tech: HTML, CSS, JavaScript, DOM Manipulation</p>
+        <ul>
+          <li>Built a feedback analysis mini app inspired by airline customer feedback workflows.</li>
+          <li>Detected likely category, sentiment, priority, and suggested action from passenger comments.</li>
+          <li>Added category filters, sample feedback, saved feedback history, and reset behavior.</li>
+        </ul>
+      </article>
+
+      <article class="project">
+        <h3>Food Order Help Center</h3>
+        <p class="meta">Tech: HTML, CSS, JavaScript, localStorage</p>
+        <ul>
+          <li>Built a searchable help-center interface for food order support journeys.</li>
+          <li>Added FAQ search, demo order tracking, and support issue creation.</li>
+          <li>Saved created issue tickets in localStorage and displayed user-friendly ticket summaries.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section>
+      <h2>Professional Experience</h2>
+      <article class="role">
+        <h3>Senior Customer Support Executive - Zomato</h3>
+        <p class="meta">Jan 2025 - Oct 2025</p>
+        <ul>
+          <li>Handled high-volume customer interactions across chat, email, and voice channels.</li>
+          <li>Resolved order, payment, refund, and service-related issues with clear communication.</li>
+          <li>Built strong understanding of common user problems in e-commerce and food-order journeys.</li>
+        </ul>
+      </article>
+
+      <article class="role">
+        <h3>Customer Feedback Analyst - IGT Solutions, Lufthansa Airlines Process</h3>
+        <p class="meta">Aug 2022 - Jun 2024</p>
+        <ul>
+          <li>Processed and categorized airline customer feedback from email and survey channels.</li>
+          <li>Identified recurring service gaps and helped convert customer comments into actionable insights.</li>
+          <li>Developed practical understanding of user experience, service pain points, and feedback workflows.</li>
+        </ul>
+      </article>
+
+      <article class="role">
+        <h3>Customer Support Executive - Tech Mahindra, JioMart Process</h3>
+        <p class="meta">Aug 2021 - Aug 2022</p>
+        <ul>
+          <li>Provided support for customer queries related to orders, payments, delivery, and escalations.</li>
+          <li>Maintained service quality while resolving customer issues under time-sensitive conditions.</li>
+          <li>Strengthened communication, problem-solving, and user empathy skills.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <p><strong>Bachelor of Computer Applications</strong> - IGNOU, 2023</p>
+      <p><strong>Class 12</strong> - CBSE, 2020</p>
+      <p><strong>Class 10</strong> - CBSE, 2018</p>
+    </section>
+
+    <section>
+      <h2>Certifications</h2>
+      <p>Career Essentials in Data Analysis - Microsoft & LinkedIn</p>
+      <p>Data Visualization with Power BI</p>
+    </section>
+
+    <section>
+      <h2>Languages</h2>
+      <p>English, Hindi</p>
+    </section>
+
+    <p class="print-note">Tip: Press Ctrl + P and choose "Save as PDF" to export this resume as a PDF.</p>
+  </main>
+</body>
+</html>

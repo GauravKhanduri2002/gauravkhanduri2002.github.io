@@ -1,7 +1,23 @@
 const appType = document.body.dataset.app;
 
+const storage = {
+  get(key, fallback) {
+    try {
+      return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch {
+      return fallback;
+    }
+  },
+  set(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  },
+  remove(key) {
+    localStorage.removeItem(key);
+  },
+};
+
 const escapeHtml = (value) =>
-  value.replace(/[&<>"']/g, (char) => ({
+  String(value).replace(/[&<>"']/g, (char) => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
@@ -14,20 +30,40 @@ const setActiveButton = (buttons, activeButton) => {
   activeButton.classList.add("is-active");
 };
 
+const showToast = (message) => {
+  let toast = document.querySelector(".toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.className = "toast";
+    toast.setAttribute("role", "status");
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.classList.add("is-visible");
+  window.clearTimeout(showToast.timer);
+  showToast.timer = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
+};
+
+const supportSeed = [
+  { id: 1041, customer: "Aman Verma", channel: "Chat", category: "Payments", priority: "High", status: "Open" },
+  { id: 1042, customer: "Neha Singh", channel: "Email", category: "Delivery", priority: "Normal", status: "Resolved" },
+  { id: 1043, customer: "Rohit Mehra", channel: "Voice", category: "Refunds", priority: "Urgent", status: "Escalated" },
+];
+
 const initSupportDashboard = () => {
   const form = document.querySelector("[data-ticket-form]");
   const list = document.querySelector("[data-ticket-list]");
   const chart = document.querySelector("[data-ticket-chart]");
   const filterButtons = document.querySelectorAll("[data-ticket-filter]");
+  const resetButton = document.querySelector("[data-reset-support]");
   const totalNode = document.querySelector("[data-total-tickets]");
   const openNode = document.querySelector("[data-open-tickets]");
   const resolvedNode = document.querySelector("[data-resolved-tickets]");
   let activeFilter = "all";
-  let tickets = [
-    { id: 1041, customer: "Aman Verma", channel: "Chat", category: "Payments", priority: "High", status: "Open" },
-    { id: 1042, customer: "Neha Singh", channel: "Email", category: "Delivery", priority: "Normal", status: "Resolved" },
-    { id: 1043, customer: "Rohit Mehra", channel: "Voice", category: "Refunds", priority: "Urgent", status: "Escalated" },
-  ];
+  let tickets = storage.get("gk-support-tickets", supportSeed);
+
+  const saveTickets = () => storage.set("gk-support-tickets", tickets);
 
   const renderChart = () => {
     const categories = ["Orders", "Payments", "Refunds", "Delivery"];
@@ -52,11 +88,11 @@ const initSupportDashboard = () => {
     resolvedNode.textContent = tickets.filter((ticket) => ticket.status === "Resolved").length;
 
     list.innerHTML = visibleTickets.length ? visibleTickets.map((ticket) => `
-      <article class="ticket-card">
+      <article class="ticket-card status-${ticket.status.toLowerCase()}">
         <div>
           <span class="category">${ticket.category}</span>
           <h3>#${ticket.id} - ${escapeHtml(ticket.customer)}</h3>
-          <p>${ticket.channel} channel · ${ticket.priority} priority · <strong>${ticket.status}</strong></p>
+          <p>${ticket.channel} channel - ${ticket.priority} priority - <strong>${ticket.status}</strong></p>
         </div>
         <div class="ticket-actions">
           <button type="button" data-ticket-action="resolve" data-ticket-id="${ticket.id}">Resolve</button>
@@ -64,7 +100,12 @@ const initSupportDashboard = () => {
           <button type="button" data-ticket-action="delete" data-ticket-id="${ticket.id}">Delete</button>
         </div>
       </article>
-    `).join("") : `<p class="empty-state">No tickets match this filter.</p>`;
+    `).join("") : `
+      <div class="empty-state">
+        <strong>No tickets here.</strong>
+        <p>Create a new ticket or switch filters to see other cases.</p>
+      </div>
+    `;
 
     renderChart();
   };
@@ -80,8 +121,10 @@ const initSupportDashboard = () => {
       priority: data.get("priority"),
       status: "Open",
     }, ...tickets];
+    saveTickets();
     form.reset();
     renderTickets();
+    showToast("Ticket created and saved.");
   });
 
   list.addEventListener("click", (event) => {
@@ -92,14 +135,24 @@ const initSupportDashboard = () => {
 
     if (action === "delete") {
       tickets = tickets.filter((ticket) => String(ticket.id) !== id);
+      showToast("Ticket deleted.");
     } else {
       tickets = tickets.map((ticket) => {
         if (String(ticket.id) !== id) return ticket;
         return { ...ticket, status: action === "resolve" ? "Resolved" : "Escalated" };
       });
+      showToast(action === "resolve" ? "Ticket marked resolved." : "Ticket escalated.");
     }
 
+    saveTickets();
     renderTickets();
+  });
+
+  resetButton.addEventListener("click", () => {
+    tickets = supportSeed;
+    saveTickets();
+    renderTickets();
+    showToast("Demo tickets restored.");
   });
 
   filterButtons.forEach((button) => {
@@ -113,62 +166,74 @@ const initSupportDashboard = () => {
   renderTickets();
 };
 
+const analyzeFeedback = (text) => {
+  const lower = text.toLowerCase();
+  const rules = [
+    { category: "Baggage", words: ["baggage", "bag", "luggage"] },
+    { category: "Refund", words: ["refund", "money", "payment", "charged"] },
+    { category: "Delay", words: ["delay", "late", "waiting", "cancelled", "cancel"] },
+    { category: "Staff", words: ["staff", "crew", "agent", "helpful", "rude"] },
+  ];
+  const positiveWords = ["helpful", "excellent", "good", "quick", "smooth", "clear"];
+  const negativeWords = ["rude", "bad", "delay", "late", "waiting", "confusing", "cancelled", "missing"];
+  const match = rules.find((rule) => rule.words.some((word) => lower.includes(word)));
+  const positiveScore = positiveWords.filter((word) => lower.includes(word)).length;
+  const negativeScore = negativeWords.filter((word) => lower.includes(word)).length;
+  const sentiment = positiveScore > negativeScore ? "Positive" : negativeScore > positiveScore ? "Negative" : "Neutral";
+  const priority = negativeScore >= 2 || lower.includes("urgent") ? "High" : sentiment === "Negative" ? "Medium" : "Low";
+  const category = match ? match.category : "General";
+  const actionMap = {
+    Baggage: "Share baggage claim status and set update frequency.",
+    Refund: "Confirm refund stage and provide expected timeline.",
+    Delay: "Explain reason, next step, and passenger options clearly.",
+    Staff: "Route praise or complaint to the service quality team.",
+    General: "Review manually and assign the right support queue.",
+  };
+
+  return {
+    id: Date.now() + Math.random(),
+    text,
+    category,
+    sentiment,
+    priority,
+    action: actionMap[category],
+  };
+};
+
+const travelSeed = [
+  analyzeFeedback("My baggage was delayed and the status update was not clear."),
+  analyzeFeedback("The staff was helpful during my connection and guided me quickly."),
+  analyzeFeedback("I am still waiting for my refund after the cancelled flight."),
+];
+
 const initTravelAnalyzer = () => {
   const form = document.querySelector("[data-feedback-form]");
+  const textarea = form.querySelector("textarea");
   const result = document.querySelector("[data-analysis-result]");
   const list = document.querySelector("[data-feedback-list]");
   const filterButtons = document.querySelectorAll("[data-feedback-filter]");
+  const sampleButton = document.querySelector("[data-sample-feedback]");
+  const clearButton = document.querySelector("[data-clear-feedback]");
   let activeFilter = "all";
-  let feedback = [
-    analyzeFeedback("My baggage was delayed and the status update was not clear."),
-    analyzeFeedback("The staff was helpful during my connection and guided me quickly."),
-    analyzeFeedback("I am still waiting for my refund after the cancelled flight."),
-  ];
+  let feedback = storage.get("gk-travel-feedback", travelSeed);
 
-  function analyzeFeedback(text) {
-    const lower = text.toLowerCase();
-    const rules = [
-      { category: "Baggage", words: ["baggage", "bag", "luggage"] },
-      { category: "Refund", words: ["refund", "money", "payment", "charged"] },
-      { category: "Delay", words: ["delay", "late", "waiting", "cancelled", "cancel"] },
-      { category: "Staff", words: ["staff", "crew", "agent", "helpful", "rude"] },
-    ];
-    const positiveWords = ["helpful", "excellent", "good", "quick", "smooth", "clear"];
-    const negativeWords = ["rude", "bad", "delay", "late", "waiting", "confusing", "cancelled", "missing"];
-    const match = rules.find((rule) => rule.words.some((word) => lower.includes(word)));
-    const positiveScore = positiveWords.filter((word) => lower.includes(word)).length;
-    const negativeScore = negativeWords.filter((word) => lower.includes(word)).length;
-    const sentiment = positiveScore > negativeScore ? "Positive" : negativeScore > positiveScore ? "Negative" : "Neutral";
-    const priority = negativeScore >= 2 || lower.includes("urgent") ? "High" : sentiment === "Negative" ? "Medium" : "Low";
-    const category = match ? match.category : "General";
-    const actionMap = {
-      Baggage: "Share baggage claim status and set update frequency.",
-      Refund: "Confirm refund stage and provide expected timeline.",
-      Delay: "Explain reason, next step, and passenger options clearly.",
-      Staff: "Route praise or complaint to the service quality team.",
-      General: "Review manually and assign the right support queue.",
-    };
-
-    return {
-      id: Date.now() + Math.random(),
-      text,
-      category,
-      sentiment,
-      priority,
-      action: actionMap[category],
-    };
-  }
+  const saveFeedback = () => storage.set("gk-travel-feedback", feedback);
 
   const renderFeedback = () => {
     const visible = activeFilter === "all" ? feedback : feedback.filter((item) => item.category === activeFilter);
     list.innerHTML = visible.length ? visible.map((item) => `
       <article class="feedback-item">
         <span class="category">${item.category}</span>
-        <h3>${item.sentiment} · ${item.priority} priority</h3>
+        <h3>${item.sentiment} - ${item.priority} priority</h3>
         <p>${escapeHtml(item.text)}</p>
         <p><strong>Suggested action:</strong> ${item.action}</p>
       </article>
-    `).join("") : `<p class="empty-state">No feedback found for this category.</p>`;
+    `).join("") : `
+      <div class="empty-state">
+        <strong>No feedback in this category.</strong>
+        <p>Analyze a new passenger comment or switch filters.</p>
+      </div>
+    `;
   };
 
   form.addEventListener("submit", (event) => {
@@ -176,6 +241,7 @@ const initTravelAnalyzer = () => {
     const data = new FormData(form);
     const analyzed = analyzeFeedback(data.get("feedback"));
     feedback = [analyzed, ...feedback];
+    saveFeedback();
     result.innerHTML = `
       <div class="result-grid">
         <article><span>Category</span><strong>${analyzed.category}</strong></article>
@@ -186,6 +252,20 @@ const initTravelAnalyzer = () => {
     `;
     form.reset();
     renderFeedback();
+    showToast("Feedback analyzed and saved.");
+  });
+
+  sampleButton.addEventListener("click", () => {
+    textarea.value = "The flight was delayed for hours, and nobody gave a clear update about my baggage.";
+    textarea.focus();
+  });
+
+  clearButton.addEventListener("click", () => {
+    feedback = travelSeed;
+    saveFeedback();
+    renderFeedback();
+    result.innerHTML = "<p>Saved feedback cleared. Try analyzing a new passenger comment.</p>";
+    showToast("Saved feedback reset.");
   });
 
   filterButtons.forEach((button) => {
@@ -206,17 +286,39 @@ const initFoodHelpCenter = () => {
   const orderResult = document.querySelector("[data-order-result]");
   const issueForm = document.querySelector("[data-issue-form]");
   const issueOutput = document.querySelector("[data-issue-output]");
+  const clearIssuesButton = document.querySelector("[data-clear-issues]");
+  let savedIssues = storage.get("gk-food-issues", []);
   const orders = {
     FD1024: { status: "Out for delivery", eta: "18 minutes", note: "Rider has picked up your order." },
     FD2048: { status: "Preparing", eta: "32 minutes", note: "Restaurant is preparing fresh items." },
     FD4096: { status: "Refund processing", eta: "2-4 business days", note: "Payment reversal has been initiated." },
   };
 
+  const renderIssues = () => {
+    issueOutput.innerHTML = savedIssues.length ? savedIssues.map((issue) => `
+      <div class="app-result">
+        <span class="category">${issue.id}</span>
+        <h3>${escapeHtml(issue.type)}</h3>
+        <p>${escapeHtml(issue.details)}</p>
+        <p><strong>Next step:</strong> Support team will review this issue and share an update.</p>
+      </div>
+    `).join("") : `
+      <div class="empty-state">
+        <strong>No support tickets yet.</strong>
+        <p>Create one from the form to see the saved ticket summary here.</p>
+      </div>
+    `;
+  };
+
   faqSearch.addEventListener("input", () => {
     const query = faqSearch.value.trim().toLowerCase();
+    let visibleCount = 0;
     faqItems.forEach((item) => {
-      item.hidden = !item.textContent.toLowerCase().includes(query);
+      const shouldShow = item.textContent.toLowerCase().includes(query);
+      item.hidden = !shouldShow;
+      if (shouldShow) visibleCount += 1;
     });
+    if (query && visibleCount === 0) showToast("No FAQ matched that search.");
   });
 
   orderForm.addEventListener("submit", (event) => {
@@ -237,22 +339,31 @@ const initFoodHelpCenter = () => {
         <p>Try FD1024, FD2048, or FD4096.</p>
       </div>
     `;
+    showToast(order ? "Order status loaded." : "Try FD1024, FD2048, or FD4096.");
   });
 
   issueForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(issueForm);
-    const ticketId = `FOOD-${Date.now().toString().slice(-4)}`;
-    issueOutput.innerHTML = `
-      <div class="app-result">
-        <span class="category">${ticketId}</span>
-        <h3>${data.get("type")}</h3>
-        <p>${escapeHtml(data.get("details"))}</p>
-        <p><strong>Next step:</strong> Support team will review this issue and share an update.</p>
-      </div>
-    `;
+    savedIssues = [{
+      id: `FOOD-${Date.now().toString().slice(-4)}`,
+      type: data.get("type"),
+      details: data.get("details"),
+    }, ...savedIssues];
+    storage.set("gk-food-issues", savedIssues);
     issueForm.reset();
+    renderIssues();
+    showToast("Support ticket created and saved.");
   });
+
+  clearIssuesButton.addEventListener("click", () => {
+    savedIssues = [];
+    storage.remove("gk-food-issues");
+    renderIssues();
+    showToast("Saved support tickets cleared.");
+  });
+
+  renderIssues();
 };
 
 if (appType === "support") initSupportDashboard();

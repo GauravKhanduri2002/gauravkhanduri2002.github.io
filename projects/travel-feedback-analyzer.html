@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travel Feedback Analyzer | Gaurav Khanduri</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -35,7 +36,11 @@
             Passenger feedback
             <textarea name="feedback" rows="5" placeholder="Example: My baggage was delayed and nobody gave me a clear update." required></textarea>
           </label>
-          <button class="app-button" type="submit">Analyze Text</button>
+          <div class="form-actions">
+            <button class="app-button" type="submit">Analyze Text</button>
+            <button class="ghost-button" type="button" data-sample-feedback>Use Sample</button>
+            <button class="ghost-button" type="button" data-clear-feedback>Clear Saved</button>
+          </div>
         </form>
       </div>
 

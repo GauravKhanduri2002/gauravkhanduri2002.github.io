@@ -144,11 +144,23 @@ h3 {
 }
 
 .app-panel {
+  position: relative;
+  overflow: hidden;
   padding: 24px;
   border: 1px solid rgba(23, 23, 23, 0.12);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 10px 24px rgba(23, 23, 23, 0.06);
+}
+
+.app-panel::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--coral), var(--yellow), var(--teal));
+  content: "";
 }
 
 .form-panel {
@@ -186,6 +198,7 @@ h3 {
 }
 
 .app-button,
+.ghost-button,
 .ticket-actions button {
   min-height: 44px;
   padding: 10px 14px;
@@ -200,10 +213,27 @@ h3 {
 }
 
 .app-button:hover,
+.ghost-button:hover,
 .ticket-actions button:hover {
   transform: translateY(-2px);
   background: var(--yellow);
   color: var(--ink);
+}
+
+.ghost-button {
+  background: var(--white);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.clear-issues {
+  margin-top: 14px;
 }
 
 .panel-title-row {
@@ -249,6 +279,18 @@ h3 {
 .issue {
   min-height: 150px;
   padding: 24px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.metric:hover,
+.insight:hover,
+.issue:hover,
+.ticket-card:hover,
+.feedback-item:hover,
+.faq-item:hover,
+.app-result:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
 }
 
 .metric strong,
@@ -286,6 +328,19 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--white);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.ticket-card.status-open {
+  border-left: 5px solid var(--coral);
+}
+
+.ticket-card.status-resolved {
+  border-left: 5px solid var(--green);
+}
+
+.ticket-card.status-escalated {
+  border-left: 5px solid var(--yellow);
 }
 
 .ticket-card h3 {
@@ -351,10 +406,13 @@ h3 {
 }
 
 .bar-track {
-  height: 14px;
+  height: 18px;
   overflow: hidden;
   border-radius: 8px;
-  background: #edf1e9;
+  background:
+    linear-gradient(90deg, rgba(23, 23, 23, 0.04) 1px, transparent 1px),
+    #edf1e9;
+  background-size: 20px 100%;
 }
 
 .bar-track span {
@@ -409,6 +467,7 @@ h3 {
 .feedback-item,
 .faq-item {
   padding: 20px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .feedback-item h3,
@@ -435,6 +494,7 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--white);
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .result-grid span {
@@ -455,7 +515,15 @@ h3 {
   padding: 18px;
   border: 1px dashed var(--line);
   border-radius: 8px;
+  background: #fbfcf7;
   color: var(--muted);
+}
+
+.empty-state strong {
+  display: block;
+  color: var(--ink);
+  font-family: "Space Grotesk", Arial, sans-serif;
+  font-size: 1.2rem;
 }
 
 .category {
@@ -483,6 +551,30 @@ h3 {
   padding: 32px 5%;
   color: var(--muted);
   text-align: center;
+}
+
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  max-width: min(340px, calc(100% - 36px));
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--white);
+  box-shadow: var(--shadow);
+  font-weight: 800;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @keyframes growBar {
@@ -532,9 +624,15 @@ h3 {
 }
 
 @media (max-width: 680px) {
+  body::before {
+    background-size: 28px 28px;
+  }
+
   .project-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 8px;
+    padding: 14px 18px;
   }
 
   .project-hero,
@@ -543,12 +641,25 @@ h3 {
     padding-right: 18px;
   }
 
+  .project-hero {
+    gap: 22px;
+    padding-top: 48px;
+  }
+
   h1 {
     font-size: 2.25rem;
   }
 
+  h2 {
+    font-size: 1.65rem;
+  }
+
+  .hero-copy {
+    font-size: 1rem;
+  }
+
   .hero-image img {
-    height: 280px;
+    height: 230px;
   }
 
   .table-row,
@@ -560,5 +671,28 @@ h3 {
 
   .ticket-actions {
     justify-content: flex-start;
+  }
+
+  .ticket-actions button,
+  .filter-button,
+  .app-button,
+  .ghost-button {
+    width: 100%;
+  }
+
+  .filter-row,
+  .form-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .app-panel {
+    padding: 18px;
+  }
+
+  .toast {
+    right: 12px;
+    bottom: 12px;
+    max-width: calc(100% - 24px);
   }
 }

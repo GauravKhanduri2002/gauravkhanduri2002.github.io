@@ -671,6 +671,36 @@ h3 {
   color: var(--muted);
 }
 
+.skill-label {
+  display: inline-flex;
+  margin-bottom: 14px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--yellow);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.skill-tags span {
+  display: inline-flex;
+  padding: 6px 9px;
+  border: 1px solid rgba(23, 23, 23, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
 .work-section {
   background: var(--paper);
 }
@@ -812,9 +842,9 @@ h3 {
 .contact-section {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 0.86fr) minmax(320px, 520px);
   gap: 30px;
-  align-items: center;
+  align-items: start;
   overflow: hidden;
   margin: 0 5% 5%;
   padding: 44px;
@@ -849,6 +879,60 @@ h3 {
 
 .contact-section .eyebrow {
   color: var(--yellow);
+}
+
+.contact-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-form {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.contact-form label {
+  display: grid;
+  gap: 7px;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 800;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink);
+  font: inherit;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-form .button {
+  border: 0;
+  cursor: pointer;
+}
+
+.form-note {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.92rem;
+}
+
+.form-note.is-success {
+  color: var(--yellow);
+  font-weight: 800;
 }
 
 footer {
@@ -1039,6 +1123,10 @@ footer a {
 }
 
 @media (max-width: 720px) {
+  body::before {
+    background-size: 28px 28px;
+  }
+
   .site-header {
     padding: 14px 18px;
   }
@@ -1137,5 +1225,19 @@ footer a {
 
   .button {
     width: 100%;
+  }
+
+  .contact-actions,
+  .hero-actions,
+  .social-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .project-card,
+  .skill-card,
+  .education-list article,
+  .timeline article {
+    transform: none !important;
   }
 }

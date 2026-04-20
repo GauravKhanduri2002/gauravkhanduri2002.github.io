@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Portfolio of Gaurav Khanduri, an aspiring web developer from Delhi with a background in customer operations, airline processes, and data reporting.">
   <title>Gaurav Khanduri | Web Developer Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -52,7 +53,7 @@
         <div class="hero-actions">
           <a class="button primary" href="#work">View My Work</a>
           <a class="button secondary" href="mailto:khandurig84@gmail.com">Email Me</a>
-          <a class="button resume-button" href="assets/Gaurav-Khanduri-Resume.pdf" download>Download Resume</a>
+          <a class="button resume-button" href="assets/Gaurav-Khanduri-Frontend-Developer-Resume.html" target="_blank" rel="noreferrer">View Web Dev Resume</a>
         </div>
         <div class="social-links" aria-label="Professional profiles">
           <a href="https://github.com/GauravKhanduri2002" target="_blank" rel="noreferrer">GitHub</a>
@@ -136,24 +137,52 @@
     <section class="section skills-section reveal-section" id="skills">
       <div class="section-heading">
         <p class="eyebrow">Skills</p>
-        <h2>A practical mix of technology, communication, and operations.</h2>
+        <h2>Web development skills with a strong customer-first foundation.</h2>
       </div>
       <div class="skill-lanes">
         <article class="skill-card motion-card">
-          <h3>Web Development Focus</h3>
-          <p>HTML, CSS, responsive layouts, JavaScript fundamentals, portfolio building, clean UI structure.</p>
+          <span class="skill-label">Frontend</span>
+          <h3>HTML, CSS, JavaScript</h3>
+          <p>Building responsive pages, clean layouts, interactive UI behavior, forms, filters, dashboards, and browser-based mini apps.</p>
+          <div class="skill-tags">
+            <span>HTML5</span>
+            <span>CSS3</span>
+            <span>JavaScript</span>
+            <span>Responsive Design</span>
+          </div>
         </article>
         <article class="skill-card motion-card">
-          <h3>Customer Experience</h3>
-          <p>Customer service, query resolution, escalation handling, voice support, chat support, email support.</p>
+          <span class="skill-label">Tools</span>
+          <h3>GitHub, VS Code, DevTools</h3>
+          <p>Using developer tools to write, inspect, debug, organize, and present web projects in a practical workflow.</p>
+          <div class="skill-tags">
+            <span>GitHub</span>
+            <span>VS Code</span>
+            <span>Chrome DevTools</span>
+            <span>Browser Testing</span>
+          </div>
         </article>
         <article class="skill-card motion-card">
-          <h3>Operations</h3>
-          <p>Reservation handling, airline feedback processes, e-commerce support, service coordination.</p>
+          <span class="skill-label">Product Thinking</span>
+          <h3>Support-Led UX</h3>
+          <p>Designing interfaces around real customer problems, clear user flows, useful empty states, and simple resolution paths.</p>
+          <div class="skill-tags">
+            <span>User Flows</span>
+            <span>Issue Resolution</span>
+            <span>Help Center UI</span>
+            <span>Dashboards</span>
+          </div>
         </article>
         <article class="skill-card motion-card">
-          <h3>Data & Tools</h3>
-          <p>CRM tools, Microsoft Excel, basic analysis, reporting, Power BI visualization foundations.</p>
+          <span class="skill-label">Soft Skills</span>
+          <h3>Communication & Ownership</h3>
+          <p>Customer handling, clear communication, escalation handling, teamwork, and calm problem-solving from 3.5+ years in operations.</p>
+          <div class="skill-tags">
+            <span>Communication</span>
+            <span>Customer Handling</span>
+            <span>Escalations</span>
+            <span>Team Coordination</span>
+          </div>
         </article>
       </div>
     </section>
@@ -260,12 +289,29 @@
         <h2>Let's build something clear, useful, and human.</h2>
         <p>I am open to web development internships, fresher roles, junior opportunities, and practical project collaborations.</p>
       </div>
-      <div class="contact-actions">
-        <a class="button primary" href="mailto:khandurig84@gmail.com">khandurig84@gmail.com</a>
-        <a class="button secondary" href="tel:+918506928735">+91 8506928735</a>
-        <a class="button resume-button" href="assets/Gaurav-Khanduri-Resume.pdf" download>Resume PDF</a>
-        <a class="button social-button" href="https://github.com/GauravKhanduri2002" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="button social-button" href="https://www.linkedin.com/in/gaurav-khanduri-a20877207" target="_blank" rel="noreferrer">LinkedIn</a>
+      <div class="contact-stack">
+        <form class="contact-form" data-contact-form>
+          <label>
+            Your name
+            <input name="name" type="text" placeholder="Your name" required>
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" placeholder="your@email.com" required>
+          </label>
+          <label>
+            Message
+            <textarea name="message" rows="4" placeholder="Tell me about the opportunity..." required></textarea>
+          </label>
+          <button class="button primary" type="submit">Send Message</button>
+          <p class="form-note" data-contact-status>This opens a ready email draft using your mail app.</p>
+        </form>
+        <div class="contact-actions">
+          <a class="button secondary" href="tel:+918506928735">+91 8506928735</a>
+          <a class="button resume-button" href="assets/Gaurav-Khanduri-Frontend-Developer-Resume.html" target="_blank" rel="noreferrer">Web Dev Resume</a>
+          <a class="button social-button" href="https://github.com/GauravKhanduri2002" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="button social-button" href="https://www.linkedin.com/in/gaurav-khanduri-a20877207" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
       </div>
     </section>
   </main>

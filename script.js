@@ -4,6 +4,8 @@ const cursorGlow = document.querySelector(".cursor-glow");
 const scrollProgress = document.querySelector(".scroll-progress");
 const revealSections = document.querySelectorAll(".reveal-section");
 const motionCards = document.querySelectorAll(".motion-card");
+const contactForm = document.querySelector("[data-contact-form]");
+const contactStatus = document.querySelector("[data-contact-status]");
 
 menuButton.addEventListener("click", () => {
   const isOpen = nav.classList.toggle("is-open");
@@ -77,3 +79,19 @@ motionCards.forEach((card) => {
     card.style.setProperty("--ry", "0deg");
   });
 });
+
+if (contactForm) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(contactForm);
+    const name = data.get("name").trim();
+    const email = data.get("email").trim();
+    const message = data.get("message").trim();
+    const subject = encodeURIComponent(`Portfolio message from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+
+    contactStatus.textContent = "Email draft prepared. Your mail app should open now.";
+    contactStatus.classList.add("is-success");
+    window.location.href = `mailto:khandurig84@gmail.com?subject=${subject}&body=${body}`;
+  });
+}
