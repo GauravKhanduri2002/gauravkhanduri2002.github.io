@@ -348,6 +348,36 @@ h3 {
   margin-top: 30px;
 }
 
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.social-links a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 800;
+}
+
+.social-links a::after {
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: var(--yellow);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.social-links a:hover::after {
+  transform: scaleX(1);
+}
+
 .hero-actions {
   animation: softRise 780ms 520ms ease both;
 }
@@ -404,6 +434,12 @@ h3 {
   background: var(--yellow);
   color: var(--ink);
   border-color: var(--yellow);
+}
+
+.button.social-button {
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .intro-strip {
@@ -538,6 +574,12 @@ h3 {
   object-fit: cover;
 }
 
+.profile-panel .profile-photo {
+  height: 420px;
+  object-position: center 28%;
+  filter: saturate(1.04) contrast(1.04);
+}
+
 .profile-panel div {
   padding: 22px;
 }
@@ -595,7 +637,13 @@ h3 {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), transparent 42%);
   content: "";
   opacity: 0;
+  pointer-events: none;
   transition: opacity 220ms ease;
+}
+
+.project-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .skill-card:hover::before,
@@ -642,31 +690,19 @@ h3 {
   box-shadow: var(--shadow);
 }
 
-.project-visual {
-  display: grid;
-  grid-template-columns: 1fr 0.7fr;
-  gap: 8px;
-  height: 110px;
+.project-image {
+  width: 100%;
+  height: 170px;
   margin-bottom: 20px;
-}
-
-.project-visual span {
   border-radius: 8px;
-  background: rgba(23, 23, 23, 0.12);
+  object-fit: cover;
+  filter: saturate(1.08) contrast(1.03);
+  transition: transform 260ms ease, filter 260ms ease;
 }
 
-.project-visual span:first-child {
-  grid-row: span 2;
-  background: linear-gradient(135deg, rgba(23, 23, 23, 0.92), rgba(23, 23, 23, 0.52));
-  animation: visualPulse 3s ease-in-out infinite;
-}
-
-.project-visual span:nth-child(2) {
-  background: var(--white);
-}
-
-.project-visual span:nth-child(3) {
-  background: rgba(255, 255, 255, 0.68);
+.project-card:hover .project-image {
+  transform: scale(1.03);
+  filter: saturate(1.22) contrast(1.05);
 }
 
 .project-card h3 {
@@ -681,6 +717,30 @@ h3 {
 
 .project-card li {
   margin: 8px 0;
+}
+
+.project-actions {
+  margin-top: 24px;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--white);
+  font-weight: 800;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.project-link:hover {
+  transform: translateY(-2px);
+  background: var(--yellow);
+  color: var(--ink);
 }
 
 .accent-coral {
@@ -795,6 +855,11 @@ footer {
   padding: 28px 5%;
   color: var(--muted);
   text-align: center;
+}
+
+footer a {
+  color: var(--teal);
+  font-weight: 800;
 }
 
 .code-rain {
@@ -928,17 +993,6 @@ footer {
 @keyframes marqueeMove {
   to {
     transform: translateX(-50%);
-  }
-}
-
-@keyframes visualPulse {
-  0%,
-  100% {
-    filter: saturate(1);
-  }
-
-  50% {
-    filter: saturate(1.6);
   }
 }
 

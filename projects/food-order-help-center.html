@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Order Help Center | Gaurav Khanduri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body data-app="food">
+  <header class="project-header">
+    <a class="back-link" href="../index.html#work">Back to Portfolio</a>
+    <a class="mini-link" href="../assets/Gaurav-Khanduri-Resume.pdf" download>Download Resume</a>
+  </header>
+
+  <main>
+    <section class="project-hero app-hero">
+      <div>
+        <p class="eyebrow">Working Mini App</p>
+        <h1>Food Order Help Center</h1>
+        <p class="hero-copy">Search support topics, check a demo order status, and raise an issue ticket through a guided support form.</p>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1100&q=80" alt="Food dishes arranged on a table">
+      </div>
+    </section>
+
+    <section class="project-section app-shell">
+      <div class="app-panel">
+        <h2>Search Help Topics</h2>
+        <div class="search-row">
+          <input type="search" placeholder="Search orders, refund, payment, delivery..." aria-label="Search help topics" data-faq-search>
+        </div>
+        <div class="faq-list" data-faq-list>
+          <article class="faq-item" data-faq><span class="category">Orders</span><h3>Where is my order?</h3><p>Use the order tracker below. If the delivery time has passed, raise an issue with your order ID.</p></article>
+          <article class="faq-item" data-faq><span class="category">Payments</span><h3>Payment deducted but order failed</h3><p>Failed payment reversals are usually automatic. Keep your transaction ID ready for support.</p></article>
+          <article class="faq-item" data-faq><span class="category">Refunds</span><h3>How long does refund take?</h3><p>Refund timelines depend on payment method. The issue form creates a support ticket summary.</p></article>
+          <article class="faq-item" data-faq><span class="category">Delivery</span><h3>Item is missing or incorrect</h3><p>Select missing item in the issue form so support can classify it correctly.</p></article>
+        </div>
+      </div>
+
+      <div class="app-panel form-panel">
+        <h2>Demo Order Tracker</h2>
+        <form class="app-form" data-order-form>
+          <label>
+            Order ID
+            <input name="orderId" type="text" placeholder="Try FD1024, FD2048, FD4096" required>
+          </label>
+          <button class="app-button" type="submit">Check Status</button>
+        </form>
+        <div class="order-result" data-order-result></div>
+      </div>
+
+      <div class="app-panel form-panel">
+        <h2>Raise Support Issue</h2>
+        <form class="app-form" data-issue-form>
+          <label>
+            Issue type
+            <select name="type" required>
+              <option>Missing item</option>
+              <option>Refund request</option>
+              <option>Payment issue</option>
+              <option>Late delivery</option>
+            </select>
+          </label>
+          <label>
+            Short description
+            <textarea name="details" rows="4" placeholder="Explain the issue in one or two lines" required></textarea>
+          </label>
+          <button class="app-button" type="submit">Create Support Ticket</button>
+        </form>
+        <div class="issue-output" data-issue-output></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="project-footer">
+    <p>Try searching FAQ topics, checking demo order IDs, and creating a support issue.</p>
+  </footer>
+
+  <script src="project.js"></script>
+</body>
+</html>

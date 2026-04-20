@@ -7,7 +7,9 @@ A creative static portfolio website for an aspiring web developer with customer 
 - `index.html` - page structure and portfolio content
 - `styles.css` - responsive visual design
 - `script.js` - mobile navigation behavior
+- `projects/` - three mini portfolio projects
 - `assets/Gaurav-Khanduri-Resume.pdf` - downloadable resume
+- `assets/gaurav-profile.jpeg` - portfolio profile image
 
 ## How to open
 
@@ -15,7 +17,5 @@ Open `index.html` in a browser.
 
 ## Suggested next updates
 
-- Add a personal photo or professional headshot.
 - Replace the practice project cards with real GitHub/live links as projects are completed.
-- Add LinkedIn and GitHub links in the contact section.
-- Add LinkedIn and GitHub links when ready.
+- Add a more formal headshot later if you want a recruiter-focused version.

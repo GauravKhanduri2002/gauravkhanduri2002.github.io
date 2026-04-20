@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Support Dashboard | Gaurav Khanduri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body data-app="support">
+  <header class="project-header">
+    <a class="back-link" href="../index.html#work">Back to Portfolio</a>
+    <a class="mini-link" href="../assets/Gaurav-Khanduri-Resume.pdf" download>Download Resume</a>
+  </header>
+
+  <main>
+    <section class="project-hero app-hero">
+      <div>
+        <p class="eyebrow">Working Mini App</p>
+        <h1>Customer Support Dashboard</h1>
+        <p class="hero-copy">Create support tickets, resolve/escalate them, filter live queues, and watch the dashboard metrics update instantly.</p>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1100&q=80" alt="Analytics dashboard on a laptop screen">
+      </div>
+    </section>
+
+    <section class="project-section app-shell">
+      <div class="app-panel form-panel">
+        <h2>Add New Ticket</h2>
+        <form class="app-form" data-ticket-form>
+          <label>
+            Customer name
+            <input name="customer" type="text" placeholder="Example: Rahul Sharma" required>
+          </label>
+          <label>
+            Channel
+            <select name="channel" required>
+              <option>Chat</option>
+              <option>Email</option>
+              <option>Voice</option>
+            </select>
+          </label>
+          <label>
+            Issue category
+            <select name="category" required>
+              <option>Orders</option>
+              <option>Payments</option>
+              <option>Refunds</option>
+              <option>Delivery</option>
+            </select>
+          </label>
+          <label>
+            Priority
+            <select name="priority" required>
+              <option>Normal</option>
+              <option>High</option>
+              <option>Urgent</option>
+            </select>
+          </label>
+          <button class="app-button" type="submit">Create Ticket</button>
+        </form>
+      </div>
+
+      <div class="app-panel">
+        <h2>Live Summary</h2>
+        <div class="metric-grid dashboard-metrics">
+          <article class="metric"><span>Total</span><strong data-total-tickets>0</strong><p>Tickets created</p></article>
+          <article class="metric"><span>Open</span><strong data-open-tickets>0</strong><p>Needs action</p></article>
+          <article class="metric"><span>Resolved</span><strong data-resolved-tickets>0</strong><p>Completed cases</p></article>
+        </div>
+      </div>
+
+      <div class="app-panel">
+        <div class="panel-title-row">
+          <h2>Ticket Queue</h2>
+          <div class="filter-row compact">
+            <button class="filter-button is-active" type="button" data-ticket-filter="all">All</button>
+            <button class="filter-button" type="button" data-ticket-filter="Open">Open</button>
+            <button class="filter-button" type="button" data-ticket-filter="Resolved">Resolved</button>
+            <button class="filter-button" type="button" data-ticket-filter="Escalated">Escalated</button>
+          </div>
+        </div>
+        <div class="ticket-list" data-ticket-list></div>
+      </div>
+
+      <div class="app-panel">
+        <h2>Category Load</h2>
+        <div class="chart" data-ticket-chart></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="project-footer">
+    <p>Try adding tickets and changing their status. The numbers and chart update live.</p>
+  </footer>
+
+  <script src="project.js"></script>
+</body>
+</html>
